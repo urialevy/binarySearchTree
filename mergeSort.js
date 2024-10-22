@@ -18,4 +18,3 @@ export function mergeSort(arr) {
   const rightHalf = arr.slice(midpoint, arr.length);
   return merge(mergeSort(leftHalf), mergeSort(rightHalf));
 }
-const smallArr = [21, 13, 8, 5, 3, 2, 1, 1, 0];
