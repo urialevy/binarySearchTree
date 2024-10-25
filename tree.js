@@ -12,16 +12,15 @@ export class Tree {
     if (!input) {
       return;
     }
-    console.log(`TreeBuild input: ${input}`);
+
     if (!this.root) {
       this.root = new Node(input);
     }
-    console.log(`building rest with ${input}`);
+
     this.buildRest(this.root, input);
   }
 
   buildRest(node, buildData) {
-    console.log(`build data received: ${buildData}`);
     if (buildData < node.data) {
       if (node.left == null) {
         node.left = new Node(buildData);
@@ -40,14 +39,13 @@ export class Tree {
 
   splitArr(arr) {
     if (arr.length < 2) {
-      console.log(`array: ${arr}. Already sorted with ${arr[0]}`);
       this.buildTree(arr[0]);
       return;
     }
     const midpoint = Math.floor(arr.length / 2);
     const leftHalf = arr.slice(0, midpoint);
     const rightHalf = arr.slice(midpoint + 1, arr.length);
-    console.log(`array: ${arr}. Midpoint: ${arr[midpoint]}`);
+
     this.buildTree(arr[midpoint]);
     return this.splitArr(leftHalf), this.splitArr(rightHalf);
   }
