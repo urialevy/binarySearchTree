@@ -1,53 +1,65 @@
 import { Node } from "./node.js";
 import { mergeSort } from "./mergeSort.js";
+
 export class Tree {
   constructor(arr) {
-    this.buildTree(arr);
-    this.root;
-  }
-  buildTree(arr) {
-    if (arr.length == 0 || arr.length == 1) {
-      this.root = arr[0];
-    }
     arr = [...new Set(arr)];
-    arr = mergeSort(arr);
 
-    //create root node
-    let mid = Math.floor(arr.length / 2);
-    console.log(arr.length / 2);
-    let rootNode = new Node(arr[mid]);
-    let currentNode = rootNode;
-    arr[mid] = null;
-    let start = 0;
-    let end = arr.length - 1;
-    this.root = rootNode;
-    // if left subtree exists
-    if (arr[start] < rootNode.data) {
-      this.root.left = new Node(arr[start]);
-      start++;
-    }
-    // if right subtree exists
-    if (arr[end] > rootNode.data) {
-      this.root.right = new Node(arr[mid + 1]);
-    }
-    currentNode = this.root.left;
-    while (arr[start] !== null) {
-      if (arr[start] < currentNode.data) {
-        currentNode.left = new Node(arr[start]);
-        currentNode = currentNode.left;
-      } else {
-        currentNode.right = new Node(arr[start]);
-        currentNode = currentNode.right;
-      }
-      start++;
-    }
-    currentNode = this.root.right;
-    for (let i = mid + 2; i < arr.length; i++) {
-      console.log(arr[i]);
-    }
-    console.log(arr);
-    return this.root;
+    arr = mergeSort(arr);
+    this.splitArr(arr);
   }
+  buildTree(input) {
+    if (!input) {
+      return;
+    }
+    console.log(`TreeBuild input: ${input}`);
+    if (!this.root) {
+      this.root = new Node(input);
+    }
+    console.log(`building rest with ${input}`);
+    this.buildRest(this.root, input);
+  }
+
+  buildRest(node, buildData) {
+    console.log(`build data received: ${buildData}`);
+    if (buildData < node.data) {
+      if (node.left == null) {
+        node.left = new Node(buildData);
+        return;
+      }
+      this.buildRest(node.left, buildData);
+    }
+    if (buildData > node.data) {
+      if (node.right == null) {
+        node.right = new Node(buildData);
+        return;
+      }
+      this.buildRest(node.right, buildData);
+    }
+  }
+
+  splitArr(arr) {
+    if (arr.length < 2) {
+      console.log(`array: ${arr}. Already sorted with ${arr[0]}`);
+      this.buildTree(arr[0]);
+      return;
+    }
+    const midpoint = Math.floor(arr.length / 2);
+    const leftHalf = arr.slice(0, midpoint);
+    const rightHalf = arr.slice(midpoint + 1, arr.length);
+    console.log(`array: ${arr}. Midpoint: ${arr[midpoint]}`);
+    this.buildTree(arr[midpoint]);
+    return this.splitArr(leftHalf), this.splitArr(rightHalf);
+  }
+  DFS(n) {
+    if (n == null) {
+      return;
+    }
+    console.log(n.data);
+    this.DFS(n.left);
+    this.DFS(n.right);
+  }
+
   prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
       return;
