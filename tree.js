@@ -49,15 +49,43 @@ export class Tree {
     this.buildTree(arr[midpoint]);
     return this.splitArr(leftHalf), this.splitArr(rightHalf);
   }
-  DFS(n) {
-    if (n == null) {
+  DFS(root) {
+    if (root == null) {
       return;
     }
-    console.log(n.data);
-    this.DFS(n.left);
-    this.DFS(n.right);
+    console.log(root.data);
+    this.DFS(root.left);
+    this.DFS(root.right);
   }
 
+  BFS(root) {
+    let level = 1;
+    if (root == null) {
+      return;
+    }
+    let queue = [];
+    queue.push(root);
+    while (queue.length !== 0) {
+      let current = queue.shift();
+      console.log(current.data);
+      if (current.left !== null) {
+        queue.push(current.left);
+      }
+      if (current.right !== null) {
+        queue.push(current.right);
+      }
+    }
+  }
+
+  height(node) {
+    if (node == null) return 0;
+    else {
+      let lheight = this.height(node.left);
+      let rheight = this.height(node.right);
+      if (lheight > rheight) return +lheight + 1;
+      else return rheight + 1;
+    }
+  }
   prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
       return;
