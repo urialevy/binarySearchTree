@@ -103,35 +103,77 @@ export class Tree {
     }
   }
   insert(value, root = this.root) {
+    if (this.root == null) {
+      this.root = new Node(value);
+      return;
+    }
+    if (value == root.data) {
+      return;
+    }
+    if (value < root.data) {
+      if (root.left == null) {
+        root.left = new Node(value);
+        return;
+      }
+      root = root.left;
+      this.insert(value, root);
+    }
+    if (value > root.data) {
+      if (root.right == null) {
+        root.right = new Node(value);
+        return;
+      }
+      root = root.right;
+      this.insert(value, root);
+    }
+  }
+  deleteItem(value, root = this.root, parentNode = null) {
     if (root == null) {
-      this.root == new Node(value);
+      console.log(`${value} not found`);
       return;
     }
 
     if (value < root.data) {
-      console.log(`${value} is less than ${root.data}`);
-      if (root.left == null) {
-        console.log(`Inserting ${value}`);
-        root.left = new Node(value);
-        return;
-      }
-      if (value > root.left.data) {
-        let node = new Node(value);
-
-        node.left = root.left;
-        console.log(node);
-        root.left = node;
-        return;
-      }
-      if (value < root.left.data) {
-        root = root.left;
-        console.log(`Recursive ${value} and node ${root.data}`);
-        this.insert(value, root);
+      this.deleteItem(value, root.left, root);
+    } else if (value > root.data) {
+      this.deleteItem(value, root.right, root);
+    } else {
+      console.log();
+      // No children, i.e. leaf node
+      if (root.left == null && root.right == null) {
+        value < parentNode.data
+          ? (parentNode.left = null)
+          : (parentNode.right = null);
       }
 
-      if (value > this.root.data) {
+      // Two children
+      if (root.left !== null && root.right !== null) {
+        if (value > parentNode.data) {
+          if (root.right.left > root.left) {
+          }
+        }
+        if (value < parentNode.data) {
+          parentNode.left = root.left;
+          root.left.rgiht = root.right;
+        }
+        return;
       }
+      // One child
+      if (root.left !== null || root.right !== null) {
+        if (root.left !== null) {
+          value < parentNode.data
+            ? (parentNode.left = root.left)
+            : (parentNode.right = root.left);
+        }
+        if (root.right !== null) {
+          value > parentNode.data
+            ? (parentNode.right = root.right)
+            : (parentNode.left = root.right);
+        }
+        return;
+      }
+
+      return;
     }
   }
-  deleteItem(value) {}
 }
