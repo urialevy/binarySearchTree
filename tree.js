@@ -102,4 +102,36 @@ export class Tree {
       this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
   }
+  insert(value, root = this.root) {
+    if (root == null) {
+      this.root == new Node(value);
+      return;
+    }
+
+    if (value < root.data) {
+      console.log(`${value} is less than ${root.data}`);
+      if (root.left == null) {
+        console.log(`Inserting ${value}`);
+        root.left = new Node(value);
+        return;
+      }
+      if (value > root.left.data) {
+        let node = new Node(value);
+
+        node.left = root.left;
+        console.log(node);
+        root.left = node;
+        return;
+      }
+      if (value < root.left.data) {
+        root = root.left;
+        console.log(`Recursive ${value} and node ${root.data}`);
+        this.insert(value, root);
+      }
+
+      if (value > this.root.data) {
+      }
+    }
+  }
+  deleteItem(value) {}
 }
