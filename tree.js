@@ -77,12 +77,12 @@ export class Tree {
     }
   }
 
-  height(node) {
+  height(node = this.root) {
     if (node == null) return 0;
     else {
       let lheight = this.height(node.left);
       let rheight = this.height(node.right);
-      if (lheight > rheight) return +lheight + 1;
+      if (lheight > rheight) return lheight + 1;
       return rheight + 1;
     }
   }
@@ -247,10 +247,18 @@ export class Tree {
   rebalance() {
     let arr = this.toArray();
     arr = [...new Set(arr)];
-    console.log(arr);
     arr = mergeSort(arr);
-    console.log(arr);
     this.root = null;
     this.splitArr(arr);
+  }
+  isBalanced(node = this.root) {
+    if (node == null) return 0;
+
+    let leftHeight = this.height(node.left);
+    let rightHeight = this.height(node.right);
+    if (leftHeight - rightHeight > 1 || rightHeight - leftHeight > 1) {
+      return false;
+    }
+    return true;
   }
 }
