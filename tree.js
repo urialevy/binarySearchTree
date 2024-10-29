@@ -49,16 +49,16 @@ export class Tree {
     this.buildTree(arr[midpoint]);
     return this.splitArr(leftHalf), this.splitArr(rightHalf);
   }
-  DFS(root) {
+  inOrder(root = this.root) {
     if (root == null) {
       return;
     }
     console.log(root.data);
-    this.DFS(root.left);
-    this.DFS(root.right);
+    this.inOrder(root.left);
+    this.inOrder(root.right);
   }
 
-  BFS(root) {
+  levelOrder(root) {
     let level = 1;
     if (root == null) {
       return;
@@ -83,7 +83,7 @@ export class Tree {
       let lheight = this.height(node.left);
       let rheight = this.height(node.right);
       if (lheight > rheight) return +lheight + 1;
-      else return rheight + 1;
+      return rheight + 1;
     }
   }
   prettyPrint(node, prefix = "", isLeft = true) {
@@ -215,5 +215,24 @@ export class Tree {
     if (value > root.data) {
       this.find(value, root.right);
     }
+  }
+  toArray(node = this.root, arr = []) {
+    if (node == null) {
+      return arr;
+    }
+
+    this.toArray(node.left, arr);
+    arr.push(node.data);
+    this.toArray(node.right, arr);
+    return arr;
+  }
+  rebalance() {
+    let arr = this.toArray();
+    arr = [...new Set(arr)];
+    console.log(arr);
+    arr = mergeSort(arr);
+    console.log(arr);
+    this.root = null;
+    this.splitArr(arr);
   }
 }
