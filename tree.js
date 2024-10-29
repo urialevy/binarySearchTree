@@ -59,7 +59,6 @@ export class Tree {
   }
 
   levelOrder(root) {
-    let level = 1;
     if (root == null) {
       return;
     }
@@ -252,8 +251,6 @@ export class Tree {
     this.splitArr(arr);
   }
   isBalanced(node = this.root) {
-    if (node == null) return 0;
-
     let leftHeight = this.height(node.left);
     let rightHeight = this.height(node.right);
     if (leftHeight - rightHeight > 1 || rightHeight - leftHeight > 1) {
