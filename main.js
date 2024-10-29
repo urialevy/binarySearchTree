@@ -12,3 +12,4 @@ test.insert(20);
 test.prettyPrint(test.root);
 test.rebalance();
 test.prettyPrint(test.root);
+test.depth(6345);

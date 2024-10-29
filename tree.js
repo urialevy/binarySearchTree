@@ -226,6 +226,24 @@ export class Tree {
     this.toArray(node.right, arr);
     return arr;
   }
+  depth(node, root = this.root, d = 0) {
+    if (root == undefined) {
+      console.log(`${node} not found`);
+      return;
+    }
+    if (node == root.data) {
+      console.log(`${node} is ${d} steps from the root`);
+      return d;
+    }
+    if (node > root.data) {
+      d++;
+      this.depth(node, root.right, d);
+    }
+    if (node < root.data) {
+      d++;
+      this.depth(node, root.left, d);
+    }
+  }
   rebalance() {
     let arr = this.toArray();
     arr = [...new Set(arr)];
