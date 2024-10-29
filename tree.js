@@ -138,7 +138,6 @@ export class Tree {
     } else if (value > root.data) {
       this.deleteItem(value, root.right, root);
     } else {
-      console.log();
       // No children, i.e. leaf node
       if (root.left == null && root.right == null) {
         value < parentNode.data
@@ -148,27 +147,56 @@ export class Tree {
 
       // Two children
       if (root.left !== null && root.right !== null) {
-        if (value > parentNode.data) {
-          if (root.right.left > root.left) {
-          }
+        // find child node on the left that has the highest value
+        let target = root;
+        let p = root;
+        let replacement = root.left;
+
+        while (replacement.right) {
+          p = replacement;
+          replacement = replacement.right;
         }
-        if (value < parentNode.data) {
-          parentNode.left = root.left;
-          root.left.rgiht = root.right;
+        console.log(`${replacement.data} to replace ${target.data}`);
+        if (replacement.left !== null) {
+          target.data = replacement.data;
+          target.left = replacement.left;
+          replacement.left = null;
+          p.right = null;
+
+          return;
+        }
+        // if replacement node is a leaf node
+        if (replacement.left == null) {
+          target.data = replacement.data;
+          p.left = null;
         }
         return;
       }
       // One child
-      if (root.left !== null || root.right !== null) {
-        if (root.left !== null) {
-          value < parentNode.data
-            ? (parentNode.left = root.left)
-            : (parentNode.right = root.left);
+      if (root.left || root.right) {
+        // left leaf
+        if (root.left) {
+          if (root.data > parentNode.data) {
+            console.log(`${root.data} > ${parentNode.data}`);
+            parentNode.right = root.left;
+          }
+          if (root.data < parentNode.data) {
+            console.log(`${root.data} < ${parentNode.data}`);
+            parentNode.left = root.left;
+          }
+
+          return;
         }
-        if (root.right !== null) {
-          value > parentNode.data
-            ? (parentNode.right = root.right)
-            : (parentNode.left = root.right);
+        // right leaf
+        if (root.right) {
+          if (root.data > parentNode.data) {
+            console.log(`${root.data} > ${parentNode.data}`);
+            parentNode.right = root.right;
+          }
+          if (root.data < parentNode.data) {
+            console.log(`${root.data} < ${parentNode.data}`);
+            parentNode.left = root.right;
+          }
         }
         return;
       }
