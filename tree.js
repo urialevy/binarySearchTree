@@ -177,11 +177,9 @@ export class Tree {
         // left leaf
         if (root.left) {
           if (root.data > parentNode.data) {
-            console.log(`${root.data} > ${parentNode.data}`);
             parentNode.right = root.left;
           }
           if (root.data < parentNode.data) {
-            console.log(`${root.data} < ${parentNode.data}`);
             parentNode.left = root.left;
           }
 
@@ -190,11 +188,9 @@ export class Tree {
         // right leaf
         if (root.right) {
           if (root.data > parentNode.data) {
-            console.log(`${root.data} > ${parentNode.data}`);
             parentNode.right = root.right;
           }
           if (root.data < parentNode.data) {
-            console.log(`${root.data} < ${parentNode.data}`);
             parentNode.left = root.right;
           }
         }
@@ -202,6 +198,22 @@ export class Tree {
       }
 
       return;
+    }
+  }
+  find(value, root = this.root) {
+    if (root == null) {
+      console.log(`${value} not found.`);
+      return;
+    }
+    if (value == root.data) {
+      console.log(root);
+      return root;
+    }
+    if (value < root.data) {
+      this.find(value, root.left);
+    }
+    if (value > root.data) {
+      this.find(value, root.right);
     }
   }
 }

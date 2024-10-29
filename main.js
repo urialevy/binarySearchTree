@@ -11,10 +11,5 @@ test.insert(9000);
 test.insert(9002);
 
 test.insert(20);
-test.prettyPrint(test.root);
 test.deleteItem(21);
-test.prettyPrint(test.root);
-// test.deleteItem(3);
-// test.prettyPrint(test.root);
-// test.deleteItem(324);
-// test.prettyPrint(test.root);
+test.find(9500);
